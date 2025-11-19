@@ -6,20 +6,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/static/img/favicon.svg" />
-  <title>Superc4mpeon WEB - Login</title>
+  <title>SERVERTUC PANNEL - Login</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <meta name="csrf-token" content="<%= it.csrfToken %>">
   <style>
     :root {
-      --primary-color: #6c5ce7;
-      --secondary-color: #a29bfe;
+      --primary-color: #00bfff;
+      --secondary-color: #87cefa;
       --dark-color: #2d3436;
       --light-color: #f5f6fa;
       --success-color: #00b894;
       --error-color: #d63031;
     }
-    
+
     body {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -27,25 +27,33 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--dark-color);
+      margin: 0;
+      padding: 0;
     }
-    
+
+    main.container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 100vh;
+    }
+
     .login-card {
       width: 100%;
       max-width: 420px;
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
+      background: #f0f0f0; /* Gris claro */
       border: none;
       transition: transform 0.3s ease;
     }
-    
+
     .login-card:hover {
       transform: translateY(-5px);
     }
-    
+
     .login-header {
       padding: 2rem 1rem;
       text-align: center;
@@ -53,27 +61,27 @@
       color: white;
       margin-bottom: 1.5rem;
     }
-    
+
     .login-logo {
       width: 90px;
       height: 90px;
       object-fit: cover;
-      border: 3px solid white;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: none;
+      box-shadow: none;
     }
-    
+
     .form-control {
       border-radius: 8px;
       padding: 12px 15px;
       border: 2px solid #e0e0e0;
       transition: all 0.3s;
     }
-    
+
     .form-control:focus {
       border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+      box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
     }
-    
+
     .btn-login {
       background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
       border: none;
@@ -83,19 +91,19 @@
       border-radius: 8px;
       transition: all 0.3s;
     }
-    
+
     .btn-login:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4);
     }
-    
+
     .social-links {
       display: flex;
       justify-content: center;
       gap: 15px;
       margin-top: 1.5rem;
     }
-    
+
     .social-btn {
       width: 40px;
       height: 40px;
@@ -107,11 +115,11 @@
       font-size: 1.2rem;
       transition: all 0.3s;
     }
-    
+
     .social-btn:hover {
       transform: scale(1.1);
     }
-    
+
     .purchase-link {
       color: var(--primary-color);
       font-weight: 500;
@@ -119,41 +127,32 @@
       transition: all 0.3s;
       display: inline-block;
     }
-    
+
     .purchase-link:hover {
       color: var(--dark-color);
       transform: translateX(3px);
     }
-    
+
     .spinner-container {
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 200px;
     }
-    
+
     .spinner-border {
       width: 3rem;
       height: 3rem;
       color: var(--primary-color);
     }
-    
-    /* Animaciones */
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
-    .animated {
-      animation: fadeIn 0.5s ease forwards;
-    }
-    
-    .form-group {
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeIn 0.5s ease forwards;
-    }
-    
+
+    .animated { animation: fadeIn 0.5s ease forwards; }
+    .form-group { margin-bottom: 1.5rem; opacity: 0; animation: fadeIn 0.5s ease forwards; }
     .form-group:nth-child(1) { animation-delay: 0.2s; }
     .form-group:nth-child(2) { animation-delay: 0.4s; }
     .btn-login { animation: fadeIn 0.5s ease 0.6s forwards; }
@@ -167,11 +166,11 @@
   <main class="container">
     <div class="login-card">
       <div class="login-header">
-        <img class="login-logo mb-3" src="/static/img/icon.jpg" alt="Superc4mpeon WEB Logo">
-        <h1 class="h3 mb-0 fw-normal">Superc4mpeon WEB</h1>
+        <img class="login-logo mb-3" src="https://i.ibb.co/mFHbKjpz/IMG-20250930-WA0002.png" alt="SERVERTUC PANNEL Logo">
+        <h1 class="h3 mb-0 fw-normal">SERVERTUC PANNEL</h1>
         <p class="mb-0">Acceso exclusivo para miembros</p>
       </div>
-      
+
       <div class="card-body px-4 pb-4 pt-0">
         <form role="form" action="/login" class="pt-3">
           <div class="__spinner spinner-container">
@@ -179,36 +178,35 @@
               <span class="visually-hidden">Loading...</span>
             </div>
           </div>
-          
+
           <div class="__inputs">
             <div class="form-group">
               <label class="form-label mb-2 fw-semibold" for="username">Nombre de usuario</label>
               <input class="form-control" id="username" name="username" placeholder="Ingresa tu usuario" required type="text">
             </div>
-            
+
             <div class="form-group">
               <label class="form-label mb-2 fw-semibold" for="password">Contraseña</label>
               <input class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required type="password">
             </div>
-            
+
             <button type="submit" id="login" class="w-100 btn btn-login btn-block d-flex align-items-center justify-content-center mb-4">
               <span>Entrar</span>
               <i class="bi bi-arrow-right ms-2"></i>
             </button>
-            
+
             <p class="text-center">
-              <a href="https://wa.me/+5493764278664" class="purchase-link" target="_self">
+              <a href="https://wa.me/+5493813414485" class="purchase-link" target="_self">
                 <i class="bi bi-lock-fill me-2"></i>Comprar Acceso
               </a>
             </p>
-            
+
             <div class="social-links">
-              <a href="https://t.me/superc4mpeon" class="social-btn" style="background-color: #0088cc;" title="Canal">
+              <a href="https://t.me/Jrxelulares" class="social-btn" style="background-color: #0088cc;" title="Canal">
                 <i class="bi bi-telegram"></i>
               </a>
-              <a href="https://wa.me/+5493764278664" class="social-btn" style="background-color: #25D366;" title="Grupo">
+              <a href="https://wa.me/+5493813414485" class="social-btn" style="background-color: #25D366;" title="Grupo">
                 <i class="bi bi-whatsapp"></i>
-              </a>
               </a>
             </div>
           </div>
@@ -222,35 +220,28 @@
   <script src="../static/js/utils.js"></script>
   <script>
     const sleep = ms => new Promise(r => setTimeout(r, ms));
-
     const showSpinner = () => {
       const spinner = document.querySelector('.__spinner');
       const inputs = document.querySelector('.__inputs');
       spinner.style.display = 'flex';
       inputs.style.display = 'none';
     }
-
     const closeSpinner = () => {
       const spinner = document.querySelector('.__spinner');
       const inputs = document.querySelector('.__inputs');
       spinner.style.display = 'none';
       inputs.style.display = 'block';
     }
-
     showSpinner();
     setTimeout(() => closeSpinner(), 500);
 
     let csrfToken = getCsrfTokenHead();
-
     const form = document.querySelector('form');
     form.addEventListener('submit', async e => {
       e.preventDefault();
-
       showSpinner();
-
       const formData = new FormData(form);
       const body = Object.fromEntries(formData);
-
       try {
         const response = await fetch(form.action, {
           method: 'POST',
@@ -260,22 +251,15 @@
             'Content-Type': 'application/json'
           }
         });
-
         const data = await response.json();
-
         if (data.status == 200) {
           showToastSuccess(data.message);
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 1000);
+          setTimeout(() => { window.location.href = '/'; }, 1000);
           return;
         }
-
         const csrfTokenRefresh = getCsrfTokenRefresh(response);
         if (csrfTokenRefresh) csrfToken = csrfTokenRefresh;
-
         showToastError(data.message);
-        
       } catch (error) {
         showToastError('Error de conexión. Intente nuevamente.');
       } finally {
