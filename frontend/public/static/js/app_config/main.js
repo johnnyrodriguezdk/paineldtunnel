@@ -88,6 +88,64 @@ const createIconsFooter = (config, list) => {
         code: config.app_layout_webview != null
     });
 
+    // === NUEVO: Botones de VPN ===
+    // Crear contenedor para botones de VPN
+    const vpnButtonsContainer = document.createElement('div');
+    vpnButtonsContainer.style.display = 'flex';
+    vpnButtonsContainer.style.gap = '5px';
+    vpnButtonsContainer.style.marginLeft = '5px';
+
+    // Botón Iniciar VPN
+    const startVpnBtn = document.createElement('button');
+    startVpnBtn.innerHTML = '▶ Iniciar';
+    startVpnBtn.className = 'btn btn-success btn-sm';
+    startVpnBtn.style.fontSize = '12px';
+    startVpnBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (window.dtunnelSDK) {
+            window.dtunnelSDK.main.startVpn()
+                .then(() => {
+                    showToastSuccess('VPN iniciada correctamente');
+                    startVpnBtn.disabled = true;
+                    stopVpnBtn.disabled = false;
+                })
+                .catch(err => showToastError('Error al iniciar VPN: ' + err.message));
+        } else {
+            showToastError('SDK no disponible');
+        }
+    };
+
+    // Botón Detener VPN
+    const stopVpnBtn = document.createElement('button');
+    stopVpnBtn.innerHTML = '⏹ Detener';
+    stopVpnBtn.className = 'btn btn-danger btn-sm';
+    stopVpnBtn.style.fontSize = '12px';
+    stopVpnBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (window.dtunnelSDK) {
+            window.dtunnelSDK.main.stopVpn()
+                .then(() => {
+                    showToastSuccess('VPN detenida correctamente');
+                    startVpnBtn.disabled = false;
+                    stopVpnBtn.disabled = true;
+                })
+                .catch(err => showToastError('Error al detener VPN: ' + err.message));
+        } else {
+            showToastError('SDK no disponible');
+        }
+    };
+
+    // Deshabilitar botón de detener por defecto (asumimos que inicia desconectado)
+    stopVpnBtn.disabled = true;
+
+    // Agregar botones al contenedor
+    vpnButtonsContainer.appendChild(startVpnBtn);
+    vpnButtonsContainer.appendChild(stopVpnBtn);
+
+    // Agregar el contenedor al footer (al principio)
+    footer.element.insertBefore(vpnButtonsContainer, footer.element.firstChild);
+    // === FIN NUEVO ===
+
     const updateModal = new UpdateModal(createInputApp(config));
     updateModal.setOnClickSave(() => list.notify('update', config));
     updateModal.setOnClickCancel(() => updateModal.hide());
@@ -173,7 +231,6 @@ const createIconsFooter = (config, list) => {
 
     return footer;
 }
-
 const createInputApp = (config) => {
     const columns = [];
     const factory = {
