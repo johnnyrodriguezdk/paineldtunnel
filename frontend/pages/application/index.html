@@ -25,7 +25,63 @@
   <script src="/static/js/dark_light.js"></script>
   <meta name="csrf-token" content="<%= it.csrfToken %>">
 </head>
+<!-- DTunnel SDK Integration -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔄 Inicializando DTunnel SDK...');
+    
+    try {
+        const sdk = new DTunnelSDK({
+            strict: false,
+            autoRegisterNativeEvents: true
+        });
+        
+        console.log('✅ DTunnel SDK listo!');
+        window.dtunnelSDK = sdk;
+        
+        // Escuchar cambios de estado
+        sdk.on('vpnState', function(event) {
+            console.log('📡 Estado VPN:', event.payload);
+            
+            // Actualizar elementos si existen
+            const statusEl = document.querySelector('.vpn-status, #vpn-status, .status-badge');
+            if (statusEl) {
+                if (event.payload === 'connected') {
+                    statusEl.textContent = 'Conectado';
+                    statusEl.className = 'status-badge status-on';
+                } else {
+                    statusEl.textContent = 'Desconectado';
+                    statusEl.className = 'status-badge status-off';
+                }
+            }
+        });
+        
+        sdk.on('notification', function(event) {
+            console.log('📢 Notificación:', event.payload);
+        });
+        
+    } catch (error) {
+        console.error('❌ Error con DTunnel SDK:', error);
+    }
+});
 
+// Funciones globales para los botones
+window.iniciarVPN = function() {
+    if (window.dtunnelSDK) {
+        window.dtunnelSDK.main.startVpn()
+            .then(() => console.log('VPN iniciada'))
+            .catch(err => alert('Error: ' + err.message));
+    }
+};
+
+window.detenerVPN = function() {
+    if (window.dtunnelSDK) {
+        window.dtunnelSDK.main.stopVpn()
+            .then(() => console.log('VPN detenida'))
+            .catch(err => alert('Error: ' + err.message));
+    }
+};
+</script>
 <body>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
   <main class="d-flex">
