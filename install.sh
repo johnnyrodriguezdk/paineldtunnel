@@ -33,6 +33,28 @@ exit 0
   rm -r /root/paineldtunnel
   rm /root/install.sh
   echo "¡Eliminado con éxito!"
+  # ==============================================
+# INTEGRACIÓN DTUNNEL SDK
+# ==============================================
+echo "🔄 Verificando integración DTunnel SDK..."
+
+# Verificar que el archivo HTML ya tenga el SDK
+if ! grep -q "DTunnelSDK" /var/www/paineldtunnel/frontend/pages/application/index.html; then
+    echo "📝 Agregando DTunnel SDK al panel..."
+    
+    # Backup del archivo original
+    cp /var/www/paineldtunnel/frontend/pages/application/index.html /var/www/paineldtunnel/frontend/pages/application/index.html.bak
+    
+    # Agregar SDK antes de </head>
+    sed -i 's|</head>|<!-- DTunnel SDK -->\n<script src="https://cdn.jsdelivr.net/gh/DTunnel0/DTunnelSDK@main/sdk/dtunnel-sdk.js"></script>\n</head>|' /var/www/paineldtunnel/frontend/pages/application/index.html
+    
+    # Agregar integración antes de </body>
+    sed -i 's|</body>|<script>\ndocument.addEventListener("DOMContentLoaded",function(){try{const e=new DTunnelSDK({strict:!1,autoRegisterNativeEvents:!0});window.dtunnelSDK=e,console.log("✅ DTunnel SDK listo!")}catch(e){console.error("❌ Error:",e)}});\nwindow.iniciarVPN=function(){window.dtunnelSDK&&window.dtunnelSDK.main.startVpn().catch(e=>alert("Error: "+e.message))};\nwindow.detenerVPN=function(){window.dtunnelSDK&&window.dtunnelSDK.main.stopVpn().catch(e=>alert("Error: "+e.message))};\n</script>\n</body>|' /var/www/paineldtunnel/frontend/pages/application/index.html
+    
+    echo "✅ DTunnel SDK integrado correctamente"
+else
+    echo "✅ DTunnel SDK ya está presente"
+fi
   exit 0
   }
   exit 0
